@@ -1,0 +1,46 @@
+{
+  "dev": {
+    "driver": "pg",
+    "user": {"ENV": "POSTGRES_USER"},
+    "password": {"ENV": "POSTGRES_PASSWORD"},
+    "host": {"ENV": "POSTGRES_HOST"},
+    "database": {"ENV": "POSTGRES_DB"},
+    "port": "20144",
+    "ssl": "true",
+    "schema": "store_schema"
+  },
+
+  "test": {   
+    "driver": "pg",
+    "user": {"ENV": "POSTGRES_USER"},
+    "password": {"ENV": "POSTGRES_PASSWORD"},
+    "host": {"ENV": "POSTGRES_HOST"},
+    "database": {"ENV": "POSTGRES_DB"},
+    "port": "20144",
+    "ssl": "true",
+    "schema": "store_schema"
+  },
+
+  "prod": {
+    "driver": "pg",
+    "user": {"ENV": "POSTGRES_USER"},
+    "password": {"ENV": "POSTGRES_PASSWORD"},
+    "host": {"ENV": "POSTGRES_HOST"},
+    "database": {"ENV": "POSTGRES_DB"},
+    "port": "20144",
+    "ssl": "true",
+    "schema": "store_schema"
+  },
+
+  "pg": {
+    "driver": "pg",
+    "user": {"ENV": "POSTGRES_USER"},
+    "password": {"ENV": "POSTGRES_PASSWORD"},
+    "host": {"ENV": "POSTGRES_HOST"},
+    "database": {"ENV": "POSTGRES_DB"},
+    "port": "20144",
+    "ssl": "true",
+    "schema": "store_schema"
+  },
+  "other": "postgres://uname:pw@server.com/dbname"
+}
