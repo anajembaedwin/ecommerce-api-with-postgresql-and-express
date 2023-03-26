@@ -6,8 +6,9 @@ const address: string = "0.0.0.0:3000"
 
 app.use(bodyParser.json())
 
-app.get('/', function (req: Request, res: Response) {
-    res.send('Hello World!')
+app.get('/users', function (req: Request, res: Response) {
+    const users = {} //here we will call the model method
+    return res.json(users)
 })
 
 app.listen(3000, function () {
