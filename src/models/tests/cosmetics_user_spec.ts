@@ -1,6 +1,6 @@
-import { User, CosmeticsStore } from '../cosmetics_user';
+import { User, CosmeticsUser } from '../cosmetics_user';
 
-const store = new CosmeticsStore();
+const store = new CosmeticsUser();
 
 describe('Cosmetics Store Model', () => {
     it('should have an index method', () => {

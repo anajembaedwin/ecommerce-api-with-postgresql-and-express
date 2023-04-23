@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "build": "tsc",
-    "start": "node src/server.js",
+    "start": "nodemon src/server.js",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "migrate": "db-migrate --env test up && db-migrate up",
     "test": "cross-env ENV=test db-migrate --env test up && jasmine-ts && db-migrate db:drop test",
@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/cors": "^2.8.13",
+    "bcrypt": "^5.1.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "db-migrate": "^0.11.13",
@@ -24,6 +25,7 @@
     "pg": "^8.5.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.17",
     "@types/jasmine": "^4.3.1",
     "@types/node": "^18.15.10",

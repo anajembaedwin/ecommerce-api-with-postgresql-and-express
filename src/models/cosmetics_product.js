@@ -12,23 +12,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CosmeticsUser = void 0;
+exports.CosmeticsProduct = void 0;
 const database_1 = __importDefault(require("../database"));
-//This class represents postgres database in javascript land
-class CosmeticsUser {
+class CosmeticsProduct {
     index() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 //open database
                 const conn = yield database_1.default.connect();
-                const sql = 'SELECT * FROM cosmetics_users';
+                const sql = 'SELECT * FROM cosmetics_products';
                 const result = yield conn.query(sql);
                 //close database
                 conn.release();
                 return result.rows;
             }
             catch (err) {
-                throw new Error(`Cannot get user details ${err}`);
+                throw new Error(`Cannot get product details ${err}`);
             }
         });
     }
@@ -36,7 +35,7 @@ class CosmeticsUser {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 //open database
-                const sql = 'SELECT * FROM cosmetics_users WHERE id=($1)';
+                const sql = 'SELECT * FROM cosmetics_products WHERE id=($1)';
                 // @ts-ignore
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [id]);
@@ -45,25 +44,25 @@ class CosmeticsUser {
                 return result.rows[0];
             }
             catch (err) {
-                throw new Error(`Could not find User with id:${id} . Error: ${err}`);
+                throw new Error(`Could not find Product with id:${id} . Error: ${err}`);
             }
         });
     }
-    create(u) {
+    create(p) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 //open database
-                const sql = 'INSERT INTO cosmetics_users (firstname, lastname, password) VALUES($1, $2, $3) RETURNING *';
+                const sql = 'INSERT INTO cosmetics_products (productName, price, productQuantity) VALUES($1, $2, $3) RETURNING *';
                 // @ts-ignore
                 const conn = yield database_1.default.connect();
-                const result = yield conn.query(sql, [u.firstname, u.lastname, u.password]);
-                const user = result.rows[0];
+                const result = yield conn.query(sql, [p.product_name, p.price, p.product_quantity]);
+                const product = result.rows[0];
                 //close database
                 conn.release();
-                return user;
+                return product;
             }
             catch (err) {
-                throw new Error(`Could not add new user ${u.firstname}. Error: ${err}`);
+                throw new Error(`Could not add new product ${p.product_name}. Error: ${err}`);
             }
         });
     }
@@ -71,19 +70,19 @@ class CosmeticsUser {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 //open database
-                const sql = 'DELETE FROM cosmetics_users WHERE id=($1)';
+                const sql = 'DELETE FROM cosmetics_products WHERE id=($1)';
                 // @ts-ignore
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [id]);
-                const user = result.rows[0];
+                const product = result.rows[0];
                 //close database
                 conn.release();
-                return user;
+                return product;
             }
             catch (err) {
-                throw new Error(`Could not delete user with id:${id}. Error: ${err}`);
+                throw new Error(`Could not delete product with id:${id}. Error: ${err}`);
             }
         });
     }
 }
-exports.CosmeticsUser = CosmeticsUser;
+exports.CosmeticsProduct = CosmeticsProduct;

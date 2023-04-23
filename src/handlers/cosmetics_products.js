@@ -9,25 +9,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const cosmetics_user_1 = require("../models/cosmetics_user");
-const store = new cosmetics_user_1.CosmeticsUser();
+const cosmetics_product_1 = require("../models/cosmetics_product");
+const storeProduct = new cosmetics_product_1.CosmeticsProduct();
 const index = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield store.index();
-    res.json(user);
+    const product = yield storeProduct.index();
+    res.json(product);
 });
 const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield store.show(req.params.id);
-    res.json(user);
+    const product = yield storeProduct.show(req.params.id);
+    res.json(product);
 });
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = {
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
-            password: req.body.password,
+        const product = {
+            product_name: req.body.productName,
+            price: req.body.price,
+            product_quantity: req.body.productQuantity,
         };
-        const newUser = yield store.create(user);
-        res.json(newUser);
+        const newProduct = yield storeProduct.create(product);
+        res.json(newProduct);
     }
     catch (err) {
         res.status(400);
@@ -35,13 +35,13 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 const destroy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const deleted = yield store.delete(req.body.id);
+    const deleted = yield storeProduct.delete(req.body.id);
     res.json(deleted);
 });
-const cosmetics_user_routes = (app) => {
-    app.get('/user', index);
-    app.get('/user/:id', show);
-    app.post('/user', create);
-    app.delete('/user/:id', destroy);
+const cosmetics_product_routes = (app) => {
+    app.get('/product', index);
+    app.get('/product/:id', show);
+    app.post('/product', create);
+    app.delete('/product/:id', destroy);
 };
-exports.default = cosmetics_user_routes;
+exports.default = cosmetics_product_routes;

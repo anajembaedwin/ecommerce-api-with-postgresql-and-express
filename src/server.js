@@ -7,6 +7,8 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const cosmetics_users_1 = __importDefault(require("./handlers/cosmetics_users"));
+const cosmetics_products_1 = __importDefault(require("./handlers/cosmetics_products"));
+const cosmetics_orders_1 = __importDefault(require("./handlers/cosmetics_orders"));
 const app = (0, express_1.default)();
 const address = "0.0.0.0:3000";
 const corsOptions = {
@@ -22,6 +24,8 @@ app.use(body_parser_1.default.json());
 //     res.json({msg: 'This is CORS-enabled with a middle ware'})
 // })
 (0, cosmetics_users_1.default)(app);
+(0, cosmetics_products_1.default)(app);
+(0, cosmetics_orders_1.default)(app);
 app.listen(3000, function () {
     console.log(`starting app on: ${address}`);
 });

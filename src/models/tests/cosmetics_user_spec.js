@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const cosmetics_user_1 = require("../cosmetics_user");
-const store = new cosmetics_user_1.CosmeticsStore();
+const store = new cosmetics_user_1.CosmeticsUser();
 describe('Cosmetics Store Model', () => {
     it('should have an index method', () => {
         expect(store.index).toBeDefined();

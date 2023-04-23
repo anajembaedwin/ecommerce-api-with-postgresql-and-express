@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
-import { User, CosmeticsStore } from '../models/cosmetics_user';
+import { User, CosmeticsUser } from '../models/cosmetics_user';
 
-const store = new CosmeticsStore();
+const store = new CosmeticsUser();
 
 const index = async (_req: Request, res: Response) => {
     const user = await store.index()
@@ -18,6 +18,7 @@ const create = async (req: Request, res: Response) => {
         const user: User = {
             firstname: req.body.firstname,
             lastname: req.body.lastname,
+            username: req.body.username,
             password: req.body.password,
         }
 

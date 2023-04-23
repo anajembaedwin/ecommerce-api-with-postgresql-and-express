@@ -1,15 +1,24 @@
-import Client from '../database'
+import Client from '../database';
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const pepper = process.env.BCRYPT_PASSWORD;
+//This tells TypeScript that you are certain that SALT_ROUNDS will always be defined and will always be a string.
+const saltRounds = process.env.SALT_ROUNDS!;
 
 //creating User type to use for type checking
 export type User = {
-    id? : string; //found out later why use ? and string here instead if number.
+    id? : string; //The ? after id indicates that the id property is optional.
     firstname : string;
     lastname : string;
+    username : string;
     password : string;
 }
 
 //This class represents postgres database in javascript land
-export class CosmeticsStore {
+export class CosmeticsUser {
     async index(): Promise<User[]> {
         try {
             //open database
@@ -44,10 +53,11 @@ export class CosmeticsStore {
     async create(u: User): Promise<User> {
         try {
             //open database
-            const sql = 'INSERT INTO cosmetics_users (firstname, lastname, password) VALUES($1, $2, $3) RETURNING *'
+            const sql = 'INSERT INTO cosmetics_users (firstname, lastname, username, password) VALUES($1, $2, $3, $4) RETURNING *'
             // @ts-ignore
             const conn = await Client.connect()
-            const result = await conn.query(sql, [u.firstname, u.lastname, u.password])
+            const hash = bcrypt.hashSync(u.password + pepper, parseInt(saltRounds));
+            const result = await conn.query(sql, [u.firstname, u.lastname, u.username, hash])
             const user = result.rows[0]
 
             //close database
@@ -65,14 +75,37 @@ export class CosmeticsStore {
             // @ts-ignore
             const conn = await Client.connect()
             const result = await conn.query(sql, [id])
-            const book = result.rows[0]
+            const user = result.rows[0]
 
             //close database
             conn.release()
         
-            return book
+            return user
         } catch (err) {
             throw new Error(`Could not delete user with id:${id}. Error: ${err}`)
         }
+    }
+
+    //custom method to authenticate user at login
+    async authenticate(username: string, password:string): Promise<User | null> {
+        //open database
+        const sql = 'SELECT * FROM cosmetics_users WHERE username=($1)'
+        // @ts-ignore
+        const conn = await Client.connect()
+        const result = await conn.query(sql, [username])
+
+        console.log(password+pepper)
+
+        if(result.rows.length) {
+            const user = result.rows[0]
+
+            console.log(user) 
+
+            if(bcrypt.compareSync(password+pepper, user.password)) {
+                return user
+            }
+        }
+
+        return null
     }
 }
